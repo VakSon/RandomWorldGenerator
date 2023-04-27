@@ -3,8 +3,8 @@ package org.example;
 import java.util.Random;
 
 class perlin_noise{
-    public static float[][] GenerateWhiteNoise(int sirka,int vyska){
-        Random rand = new Random(System.currentTimeMillis());
+    public static float[][] GenerateWhiteNoise(int sirka,int vyska,long seed){
+        Random rand = new Random(seed);
         float[][] noise = new float[sirka][vyska];
         for (int i = 0; i < sirka; i++){
             for (int j = 0; j < vyska; j++){
@@ -104,6 +104,11 @@ class perlin_noise{
         }
 
         return perlinNoise;
+    }
+
+
+    public static float[][] WholeNoise(String seed,int sirka, int vyska,int octaveCount){
+        return GeneratePerlinNoise(perlin_noise.GenerateWhiteNoise(sirka,vyska,garbagefunctions.Seed2Long(seed)),octaveCount);
     }
 
 }

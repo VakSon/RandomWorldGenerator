@@ -13,15 +13,20 @@ import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 public class Window extends JComponent{
 
     static int vyska = Main.vyska;
+    Mapa mapa = Main.mapa;
     static int sirka = Main.sirka;
 
     public void paint(Graphics g) {
         BufferedImage image = new BufferedImage(sirka,vyska,BufferedImage.TYPE_INT_RGB);
-        int[][] HM = Main.GetPixels(sirka,vyska);
+        Color start = new Color(255, 212, 121);
+        Color end = new Color(0, 55, 10);
+        float[][] HM = mapa.Heightmap;
         for (int i=0;i<sirka;i++){
             for (int j=0;j<vyska;j++){
-                int t = HM[i][j];
-                int p = (t<<16) | (t<<8) | t;
+                int red = (int)(start.getRed() * (1-HM[i][j]) + end.getRed() * HM[i][j]);
+                int green = (int)(start.getGreen() * (1-HM[i][j]) + end.getGreen() * HM[i][j]);
+                int blue = (int)(start.getBlue() * (1-HM[i][j]) + end.getBlue() * HM[i][j]);
+                int p = (red<<16) | (green<<8) | blue;
                 image.setRGB(i,j,p);
 
             }
