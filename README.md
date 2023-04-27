@@ -1,10 +1,8 @@
 # GENERATOR
+## Možné implementace
 
-- fff
-- ffff
-- fffff
-- ffffff
-- fffff
-- fffff
-
-[x]
+- výšková mapa
+- teplotní mapa
+- Vítr plus fronty
+- Déšt + řeky terénem?
+- Tvrdost různých povrchů
