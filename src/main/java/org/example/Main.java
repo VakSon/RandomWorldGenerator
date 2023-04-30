@@ -10,7 +10,7 @@ class Main{
 
         public static void main(String[]args) throws IOException {
         mapa = new Mapa();
-        mapa.setter(sirka,vyska,8,"Ibroke my pc");
+        mapa.setter(sirka,vyska,8,"Ibrle my pc");
         mapa.Build_Heighmap();
         Window.okno();
 

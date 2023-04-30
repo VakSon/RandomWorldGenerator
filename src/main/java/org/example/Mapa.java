@@ -14,6 +14,6 @@ public class Mapa {
     }
     void Build_Heighmap(){
 //        Heightmap = perlin_noise.GenerateSmoothNoise(perlin_noise.GenerateWhiteNoise(sirka,vyska,garbagefunctions.Seed2Long(seed)),8);
-        Heightmap = perlin_noise.WholeNoise(seed,sirka,vyska,octaveCount);
+        Heightmap = perlinNoise.WholeNoise(seed,sirka,vyska,octaveCount);
     }
 }

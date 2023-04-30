@@ -27,7 +27,7 @@ public class Window extends JComponent{
                 int red = 6;
                 int blue = 66;
                 int green = 112;
-                if (HM[i][j] >= 0.5){
+                if (HM[i][j] >= 0.55){
                     red = (int) (start.getRed() * (1 - HM[i][j]) + end.getRed() * HM[i][j]);
                     green = (int) (start.getGreen() * (1 - HM[i][j]) + end.getGreen() * HM[i][j]);
                     blue = (int) (start.getBlue() * (1 - HM[i][j]) + end.getBlue() * HM[i][j]);

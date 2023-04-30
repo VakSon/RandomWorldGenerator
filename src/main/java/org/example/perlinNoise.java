@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.Random;
 
-class perlin_noise{
+class perlinNoise{
     public static float[][] GenerateWhiteNoise(int sirka,int vyska,long seed){
         Random rand = new Random(seed);
         float[][] noise = new float[sirka][vyska];
@@ -30,25 +30,25 @@ class perlin_noise{
             //calculate the horizontal sampling indices
             int sample_i0 = (i / samplePeriod) * samplePeriod;
             int sample_i1 = (sample_i0 + samplePeriod) % sirka; //wrap around
-            float horizontal_blend = (i - sample_i0) * sampleFrequency;
+            float horizontalBlend = (i - sample_i0) * sampleFrequency;
 
             for (int j = 0; j < vyska; j++)
             {
                 //calculate the vertical sampling indices
                 int sample_j0 = (j / samplePeriod) * samplePeriod;
                 int sample_j1 = (sample_j0 + samplePeriod) % vyska; //wrap around
-                float vertical_blend = (j - sample_j0) * sampleFrequency;
+                float verticalBlend = (j - sample_j0) * sampleFrequency;
 
                 //blend the top two corners
                 float top = Interpolate(baseNoise[sample_i0][sample_j0],
-                        baseNoise[sample_i1][sample_j0], horizontal_blend);
+                        baseNoise[sample_i1][sample_j0], horizontalBlend);
 
                 //blend the bottom two corners
                 float bottom = Interpolate(baseNoise[sample_i0][sample_j1],
-                        baseNoise[sample_i1][sample_j1], horizontal_blend);
+                        baseNoise[sample_i1][sample_j1], horizontalBlend);
 
                 //final blend
-                smoothNoise[i][j] = Interpolate(top, bottom, vertical_blend);
+                smoothNoise[i][j] = Interpolate(top, bottom, verticalBlend);
             }
         }
 
@@ -109,7 +109,7 @@ class perlin_noise{
 
 
     public static float[][] WholeNoise(String seed,int sirka, int vyska,int octaveCount){
-        return GeneratePerlinNoise(perlin_noise.GenerateWhiteNoise(sirka,vyska,garbagefunctions.Seed2Long(seed)),octaveCount);
+        return GeneratePerlinNoise(GenerateWhiteNoise(sirka,vyska,garbagefunctions.Seed2Long(seed)),octaveCount);
     }
 
 }
