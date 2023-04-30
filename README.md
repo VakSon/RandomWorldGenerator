@@ -13,9 +13,7 @@
 - změna persistance na 0.7 (větší náhodnodnost), odstranenim *sampleFreq. z blendů dojde k zajímavým rozbitím (zjistit důvod)
 Zatím umí jenom Heightmapu
 
-![Sample](/src/images/perlin noise with no samplefrequency in smooth noise.png)
-
----
+![Sample]()
 
 ### V 0.1.1 
 - Persistance změněna zpět na 0.55, základní přidání mořské hladiny, hodnoty pod 0.5 jsou nyní voda V perlinově šumu nová interpolace místo lineární cosinová Výšková mapa tímto hotová
