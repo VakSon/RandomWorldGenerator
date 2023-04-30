@@ -13,7 +13,7 @@
 - změna persistance na 0.7 (větší náhodnodnost), odstranenim *sampleFreq. z blendů dojde k zajímavým rozbitím (zjistit důvod)
 Zatím umí jenom Heightmapu
 
-![Sample]()
+![Sample](src/images/nosamplefrequencyinsmoothnoise.png)
 
 ### V 0.1.1 
 - Persistance změněna zpět na 0.55, základní přidání mořské hladiny, hodnoty pod 0.5 jsou nyní voda V perlinově šumu nová interpolace místo lineární cosinová Výšková mapa tímto hotová
@@ -23,7 +23,7 @@ Zatím umí jenom Heightmapu
     return x0 * (1 - alpha) + alpha * x1;    
   }
 ```
-<img src="C:\Users\vaxon\IdeaProjects\teplotnimapa\src\images\V 0.1.1 - linear interpolation.png" width="800" height="600"/>
+![LinearInterpolation](src/images/v0-1-1-linear_interpolation.png)
 
 - cosinova interpolace - vypadá lépe<br>
   ```
@@ -32,4 +32,4 @@ Zatím umí jenom Heightmapu
       return (float) (x0 * (1 - cosine) + cosine * x1);
     }
   ```
-<img src="C:\Users\vaxon\IdeaProjects\teplotnimapa\src\images\V 0.1.1 - cosine interpolation.png" width="800" height="600">
+![CosineInterpolation](src/images/v0-1-1-cosine_interpolation.png)
