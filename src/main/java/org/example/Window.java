@@ -1,6 +1,6 @@
 package org.example;
 
-import net.ouska.utils.IO;
+//import net.ouska.utils.IO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,10 +22,16 @@ public class Window extends JComponent{
         Color end = new Color(0, 55, 10);
         float[][] HM = mapa.Heightmap;
         for (int i=0;i<sirka;i++){
+
             for (int j=0;j<vyska;j++){
-                int red = (int)(start.getRed() * (1-HM[i][j]) + end.getRed() * HM[i][j]);
-                int green = (int)(start.getGreen() * (1-HM[i][j]) + end.getGreen() * HM[i][j]);
-                int blue = (int)(start.getBlue() * (1-HM[i][j]) + end.getBlue() * HM[i][j]);
+                int red = 6;
+                int blue = 66;
+                int green = 112;
+                if (HM[i][j] >= 0.5){
+                    red = (int) (start.getRed() * (1 - HM[i][j]) + end.getRed() * HM[i][j]);
+                    green = (int) (start.getGreen() * (1 - HM[i][j]) + end.getGreen() * HM[i][j]);
+                    blue = (int) (start.getBlue() * (1 - HM[i][j]) + end.getBlue() * HM[i][j]);
+                }
                 int p = (red<<16) | (green<<8) | blue;
                 image.setRGB(i,j,p);
 

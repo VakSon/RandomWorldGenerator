@@ -22,7 +22,7 @@ class perlin_noise{
 
         float[][] smoothNoise = new float[sirka][vyska];
 
-        int samplePeriod = (int) Math.pow(2, octave);; // calculates 2 ^ k
+        int samplePeriod = (int) Math.pow(2, octave); // calculates 2 ^ k
         float sampleFrequency = 1.0f / samplePeriod;
 
         for (int i = 0; i < sirka; i++)
@@ -57,7 +57,8 @@ class perlin_noise{
 
     static float Interpolate(float x0, float x1, float alpha)
     {
-        return x0 * (1 - alpha) + alpha * x1;
+        double cosine = (1.0 - Math.cos(alpha * Math.PI)) / 2.0;
+        return (float) (x0 * (1 - cosine) + cosine * x1);
     }
 
     public static float[][] GeneratePerlinNoise(float[][] baseNoise, int octaveCount)
@@ -67,7 +68,7 @@ class perlin_noise{
 
         float[][][] smoothNoise = new float[octaveCount][][]; //an array of 2D arrays containing
 
-        float persistance = 0.5f;
+        float persistance = 0.55f;
 
         //generate smooth noise
         for (int i = 0; i < octaveCount; i++)

@@ -1,11 +1,11 @@
 package org.example;
 
 public class Mapa {
-    public static int vyska = 600;
-    public static int sirka = 800;
-    public static String seed = null;
-    public static int octaveCount = 8;
-    public static float[][] Heightmap = null;
+    public int vyska = 600;
+    public int sirka = 800;
+    public String seed = null;
+    public int octaveCount = 8;
+    public float[][] Heightmap = null;
     void setter(int s, int v, int o, String see){
         vyska = v;
         sirka = s;
@@ -13,6 +13,7 @@ public class Mapa {
         seed = see;
     }
     void Build_Heighmap(){
+//        Heightmap = perlin_noise.GenerateSmoothNoise(perlin_noise.GenerateWhiteNoise(sirka,vyska,garbagefunctions.Seed2Long(seed)),8);
         Heightmap = perlin_noise.WholeNoise(seed,sirka,vyska,octaveCount);
     }
 }
