@@ -12,7 +12,9 @@
 ### V 0.1 
 - změna persistance na 0.7 (větší náhodnodnost), odstranenim *sampleFreq. z blendů dojde k zajímavým rozbitím (zjistit důvod)
 Zatím umí jenom Heightmapu
-<img src="C:\Users\vaxon\IdeaProjects\teplotnimapa\src\images\perlin noise with no samplefrequency in smooth noise.png" width="800" height="600"/>
+
+![Sample](/src/images/perlin noise with no samplefrequency in smooth noise.png)
+
 ---
 
 ### V 0.1.1 
