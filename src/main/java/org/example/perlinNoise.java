@@ -29,8 +29,14 @@ class perlinNoise{
         {
             //calculate the horizontal sampling indices
             int sample_i0 = (i / samplePeriod) * samplePeriod;
-            int sample_i1 = (sample_i0 + samplePeriod) % sirka; //wrap around
+            int sample_i1 = (sample_i0 + samplePeriod) % sirka;//wrap around
             float horizontalBlend = (i - sample_i0) * sampleFrequency;
+            //upgrade of wraparound so that the left and right ends are continuos
+            if(sample_i1 < sample_i0){
+                sample_i1 = 0;
+                horizontalBlend = (float)(i - sample_i0) / (float)(sirka - sample_i0);
+            }
+
 
             for (int j = 0; j < vyska; j++)
             {
@@ -38,7 +44,6 @@ class perlinNoise{
                 int sample_j0 = (j / samplePeriod) * samplePeriod;
                 int sample_j1 = (sample_j0 + samplePeriod) % vyska; //wrap around
                 float verticalBlend = (j - sample_j0) * sampleFrequency;
-
                 //blend the top two corners
                 float top = Interpolate(baseNoise[sample_i0][sample_j0],
                         baseNoise[sample_i1][sample_j0], horizontalBlend);
@@ -69,9 +74,9 @@ class perlinNoise{
         float[][][] smoothNoise = new float[octaveCount][][]; //an array of 2D arrays containing
 
         float persistance = 0.55f;
-
+        smoothNoise[0] = baseNoise;
         //generate smooth noise
-        for (int i = 0; i < octaveCount; i++)
+        for (int i = 1; i < octaveCount; i++)
         {
             smoothNoise[i] = GenerateSmoothNoise(baseNoise, i);
         }
@@ -109,7 +114,23 @@ class perlinNoise{
 
 
     public static float[][] WholeNoise(String seed,int sirka, int vyska,int octaveCount){
-        return GeneratePerlinNoise(GenerateWhiteNoise(sirka,vyska,garbagefunctions.Seed2Long(seed)),octaveCount);
+//        int frequency = (int) Math.pow(2,octaveCount);
+//        int sample_x0 = (sirka / frequency) * frequency;
+//        int sample_y0 = (vyska / frequency) * frequency;
+        float [][]tempRand = GenerateWhiteNoise(sirka,vyska,garbagefunctions.Seed2Long(seed));
+//        for (int i = sample_x0; i < sirka; i++)
+//        {
+//            int x = -1;
+//            x++;
+//            for (int j = 0; j < vyska; j++)
+//            {
+//                tempRand[i][j] = tempRand[x][j];
+//            }
+//        }
+//        return GeneratePerlinNoise(GenerateWhiteNoise(sirka,vyska,garbagefunctions.Seed2Long(seed)),octaveCount);
+        return GeneratePerlinNoise(tempRand,octaveCount);
     }
+
+
 
 }

@@ -28,4 +28,16 @@ public class garbagefunctions {
             throw new RuntimeException(e);
         }
     }
+    public static float[][] TempMap(int vyska, int sirka, int equator){
+        float[][] tempmap = new float[sirka][vyska];
+        for (int j = 0; j < vyska; j++){
+            float h = (float) j/equator;
+            double cosine = (1.0 - Math.cos( h * Math.PI)) / 2.0;
+            float f = (float) (25 * (1 - cosine) + cosine * -5);
+            for (int i = 0; i < sirka; i++){
+                tempmap[i][j] = (float)f;
+            }
+        }
+        return tempmap;
+    }
 }
