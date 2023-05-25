@@ -37,3 +37,4 @@ Zatím umí jenom Heightmapu
 ### V 0.1.2
 - trochu jsem si pohral s perlin noisem aby leva a prava strana na sebe navazovali, chce to dovylepsit
 - nově Voronoiho Diagram(spatne nazev mam nejspis) rozdeleni bodu do blizkych okruhu idealní pro tektonicke desky<br>
+- ![VoronoiDiagram_v0.1.2](voronoiDiagramV0-1-2.png)
