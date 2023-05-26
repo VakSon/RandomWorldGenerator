@@ -17,7 +17,7 @@ public class Mapa {
     }
     void Init(){
         Build_Heighmap();
-//        Build_TemperatureMap();
+        Build_TemperatureMap();
     }
     void Build_Heighmap(){
 //        Heightmap = perlin_noise.GenerateSmoothNoise(perlin_noise.GenerateWhiteNoise(sirka,vyska,garbagefunctions.Seed2Long(seed)),8);
