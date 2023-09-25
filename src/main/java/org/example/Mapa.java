@@ -22,7 +22,7 @@ public class Mapa {
     void Build_Heighmap(){
 //        Heightmap = perlin_noise.GenerateSmoothNoise(perlin_noise.GenerateWhiteNoise(sirka,vyska,garbagefunctions.Seed2Long(seed)),8);
 //        heightMap = perlinNoise.WholeNoise(seed,sirka,vyska,octaveCount);
-        heightMap = VoroniDiagram.idknamesafteritworks(12,sirka,vyska,seed);
+        heightMap = VoroniDiagram.idknamesafteritworks(15,sirka,vyska,seed);
     }
     void Build_TemperatureMap(){
         temperatureMap = garbagefunctions.TempMap(vyska,sirka,equator);

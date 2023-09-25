@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.Random;
 
-class perlinNoise{
+class PerlinNoise {
     public static float[][] GenerateWhiteNoise(int sirka,int vyska,long seed){
         Random rand = new Random(seed);
         float[][] noise = new float[sirka][vyska];
