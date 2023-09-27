@@ -10,9 +10,9 @@ import java.io.IOException;
 
 public class Window extends JComponent{
 
-    static int vyska = Main.vyska;
+    static int vyska = Settings.vyska;
     Mapa mapa = Main.mapa;
-    static int sirka = Main.sirka;
+    static int sirka = Settings.sirka;
 
     public void paint(Graphics g) {
         BufferedImage image = new BufferedImage(sirka,vyska,BufferedImage.TYPE_INT_RGB);

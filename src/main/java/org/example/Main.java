@@ -5,7 +5,7 @@ import java.io.IOException;
 
 class Main{
     static int vyska = 600;
-    static int sirka = 799;
+    static int sirka = 800;
     static Mapa mapa;
 
         public static void main(String[]args) throws IOException {
