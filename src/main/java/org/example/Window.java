@@ -13,12 +13,15 @@ public class Window extends JComponent{
     static int vyska = Settings.vyska;
     Mapa mapa = Main.mapa;
     static int sirka = Settings.sirka;
+    JFrame frame = new JFrame("Main");
+
 
     public void paint(Graphics g) {
         BufferedImage image = new BufferedImage(sirka,vyska,BufferedImage.TYPE_INT_RGB);
         Color start = new Color(255, 212, 121);
         Color end = new Color(0, 55, 10);
-        float[][] HM = mapa.heightMap;
+        //float[][] HM = mapa.heightMap;
+        float[][] HM = Lithosphere.Img();
         for (int i=0;i<sirka;i++){
 
             for (int j=0;j<vyska;j++){
@@ -41,12 +44,16 @@ public class Window extends JComponent{
         g.drawImage(image, (getWidth()-sirka)/2, (getHeight()-vyska)/2, this);
     }
     public static void okno() throws IOException {
-        JFrame frame = new JFrame("Main");
         frame.getContentPane().add(new Window());
         frame.setSize(sirka, vyska);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
 
+    }
+    public void update (Graphics g,String title)
+    {
+        paint (g);
+        frame.setTitle(title);
     }
 }

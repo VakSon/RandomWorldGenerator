@@ -8,4 +8,5 @@ public class Settings {
     //perlin
 
     //plates
+    public static int plateSum = 50;
 }
