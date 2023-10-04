@@ -15,13 +15,14 @@ public class VoroniDiagram {
 
         return result;
     }
-    static float[][] Velocity(int sum, int numOfExamples,String seed){
+    static float[][] Velocity(int sum, int numOfExamples,long seed){
         // generates velocity of InicialPoints(sum) in 360 degrees using perlin noise
 
         float[][] result = PerlinNoise.WholeNoise(seed,sum,numOfExamples,5);
         return result;
     }
     //move elsewhere its here just for now
+    // wtf was that supposed to be
     int[][] Movement(int[][]plates,float[][]speed,float[][]direction/*float[][] mass*/){
         ArrayList<ArrayList<Integer> > newPlates = new ArrayList<ArrayList<Integer>>();
         for (int i = 0; i < plates.length; i++){
@@ -32,13 +33,13 @@ public class VoroniDiagram {
         return null;
     }
     //measures distance from point to the inicPoints and for the shortest one it remembers its "id"
-    public static float[][] idknamesafteritworks(int sum, int width, int height, String seed){
+    public static int[][] GenerateInt(int sum, int width, int height, long seed){
         //Create inicial Points
-        int[][] inicPoints = InicialPoints(sum,width,height,garbagefunctions.Seed2Long(seed));
+        int[][] inicPoints = InicialPoints(sum,width,height,seed);
         //adds for each InicialPoint set of speed for diferent directions for non linear borders between areas.
         float[][] velocity = Velocity(sum,512,seed);
         double idkfucknames = 512/(Math.PI*2);
-        float[][] result= new float[width][height];
+        int[][] result= new int[width][height];
 
 
         for (int i = 0; i < width; i++){
@@ -78,12 +79,26 @@ public class VoroniDiagram {
 
 
                 }
-                result[i][j] = (float) index/sum;
+                result[i][j] = index;
             }
         }
 
 
         return result;
     }
+    public static float[][] GenerateFloat(int sum, int width, int height, long seed){
 
-}
+        int[][] voronoiInt = GenerateInt(sum,width,height,seed);
+        float[][] result = new float[width][height];
+        for (int i = 0; i < width; i++){
+            for (int j = 0; j < height; j++){
+                result[i][j] = (float) voronoiInt[i][j]/sum;
+            }
+        }
+
+        return result;
+    }
+
+
+
+    }

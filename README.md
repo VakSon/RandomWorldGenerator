@@ -38,3 +38,11 @@ Zatím umí jenom Heightmapu
 - trochu jsem si pohral s perlin noisem aby leva a prava strana na sebe navazovali, chce to dovylepsit
 - nově Voronoiho Diagram(spatne nazev mam nejspis) rozdeleni bodu do blizkych okruhu idealní pro tektonicke desky<br>
 ![VoronoiDiagram_v0.1.2](src/images/voronoiDiagramV0-1-2.png)
+
+### V xxx
+-Voronoi diagram celkem good 
+rozepsat
+
+### V xxxx
+- tektonicke desky - začátek
+- generuji je paralelne pridam ke kazde bod na jeji hranici je to rozbity, puvodne jsem mel pomale generovani, chyba byla v odstranovani prvku z arraylistu border - opraveno, generace porad vypada jak shit, budu radeji pouzivat voronoi algoritmus

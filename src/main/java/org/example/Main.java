@@ -4,17 +4,22 @@ import java.io.IOException;
 
 
 class Main{
-    static int vyska = Settings.vyska;
-    static int sirka = Settings.sirka;
+    static int vyska = Settings.sizeY;
+    static int sirka = Settings.sizeX;
     static Mapa mapa;
+
+    static Window w;
 
         public static void main(String[]args) throws IOException {
         //mapa = new Mapa();
-        //mapa.setter(sirka,vyska,8,"Ibrle my pc");
         //mapa.Build_Heighmap();
-        Lithosphere l = new Lithosphere(Settings.plateSum,sirka,vyska,garbagefunctions.Seed2Long("Iffzdtf"));
+
+        w = new Window();
+        w.okno();
+
+        Lithosphere l = new Lithosphere();
         System.out.println("Lithosphere is created.");
-        Window.okno();
+        w.update(w.getGraphics(),"Done",Lithosphere.Img());
 
         }
     }

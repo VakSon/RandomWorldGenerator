@@ -24,8 +24,14 @@ public class Point{
 
     //mass
     void Move(int[] offset){
-        x = (x + offset[0])% Settings.sirka; // wrap needed
-        y = y + offset[1] % Settings.vyska; // wrap needed
+        x = (x + offset[0])% Lithosphere.sizeX; // wrap needed
+        y = y + offset[1] % Lithosphere.sizeY; // wrap needed
+        //collision
+        //subdoction
+        //Stress (posun)
+
+
+
         if (isBorder()){
             plateParrent.border.add(this);
         }
@@ -42,8 +48,8 @@ public class Point{
         for (int i = -1; i < 2; i++){
             for (int j = -1; j < 2; j++){
                 //can be done with Listhosphere pointlist or plate pointlist have to decide whats better
-                if (Lithosphere.pointlist[Wrap(x + i,Settings.sirka)][Wrap(y + j,Settings.vyska)] !=null ){
-                    if (Lithosphere.pointlist[Wrap(x + i,Settings.sirka)][Wrap(y + j,Settings.vyska)].plateParrent.equals(plateParrent)){
+                if (Lithosphere.pointlist[Wrap(x + i,Lithosphere.sizeX)][Wrap(y + j,Lithosphere.sizeY)] !=null ){
+                    if (Lithosphere.pointlist[Wrap(x + i,Lithosphere.sizeX)][Wrap(y + j,Lithosphere.sizeY)].plateParrent.equals(plateParrent)){
 
                         return true;
                     }
@@ -52,6 +58,19 @@ public class Point{
             }
         }
         return false;
+    }
+    public boolean isBorderingNull(){
+        //check if its 8 neighbours are null
+        for (int i = -1; i < 2; i++){
+            for (int j = -1; j < 2; j++){
+                //can be done with Listhosphere pointlist or plate pointlist have to decide whats better
+                if (Lithosphere.pointlist[Wrap(x + i,Lithosphere.sizeX)][Wrap(y + j,Lithosphere.sizeY)] ==null ){
+                return true;
+
+                }
+            }
+
+        }return false;
     }
 
 }

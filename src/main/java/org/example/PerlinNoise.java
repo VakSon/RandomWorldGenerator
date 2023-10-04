@@ -31,6 +31,7 @@ class PerlinNoise {
             int sample_i0 = (i / samplePeriod) * samplePeriod;
             int sample_i1 = (sample_i0 + samplePeriod) % sirka;//wrap around
             float horizontalBlend = (i - sample_i0) * sampleFrequency;
+
             //upgrade of wraparound so that the left and right ends are continuos
             if(sample_i1 < sample_i0){
                 sample_i1 = 0;
@@ -113,11 +114,11 @@ class PerlinNoise {
     }
 
 
-    public static float[][] WholeNoise(String seed,int sirka, int vyska,int octaveCount){
+    public static float[][] WholeNoise(long seed,int sirka, int vyska,int octaveCount){
 //        int frequency = (int) Math.pow(2,octaveCount);
 //        int sample_x0 = (sirka / frequency) * frequency;
 //        int sample_y0 = (vyska / frequency) * frequency;
-        float [][]tempRand = GenerateWhiteNoise(sirka,vyska,garbagefunctions.Seed2Long(seed));
+        float [][]tempRand = GenerateWhiteNoise(sirka,vyska,seed);
 //        for (int i = sample_x0; i < sirka; i++)
 //        {
 //            int x = -1;

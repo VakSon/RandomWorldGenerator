@@ -14,21 +14,39 @@ public class Lithosphere {
     public static int plateSum;
     //random for the whole project
     public static Random random;
-    public Lithosphere(int plateSum, int sizeX, int sizeY,long seed){
-        this.sizeY = sizeY;
-        this.sizeX = sizeX;
-        this.plateSum = plateSum;
+    public Lithosphere(){
+        this.sizeY = Settings.sizeY;
+        this.sizeX = Settings.sizeX;
+        this.plateSum = Settings.plateSum;
+        this.seed = Settings.seed;
         this.random = new Random(seed);
         pointlist = new Point[sizeX][sizeY];
         System.out.println("Lithosphere is being created");
-        //I think I can generate now everything should be ready
-        this.Create();
+        //generating by plate method
+        // Create();
+
+
+        //generating by voronoi method
+        CreateByVoronoi();
+        SetPlateStuffs();
+        while(true){
+            Update();
+            Main.w.update(Main.w.frame.getGraphics(),"Cycle",Img());
+        }
     }
+
+
+
+
     public static float[][] Img(){
         float[][] result = new float[sizeX][sizeY];
         for (int i = 0; i < sizeX; i++){
             for (int j = 0; j < sizeY; j++){
-                result[i][j] = pointlist[i][j].plateParrent.id/(float)plateSum;
+                if(pointlist[i][j] == null){
+                    result[i][j] = 0;
+                }else{
+                    result[i][j] = pointlist[i][j].plateParrent.id/(float)plateSum;
+                }
             }
         }
         return result;
@@ -40,6 +58,8 @@ public class Lithosphere {
     //Public  static List<Points> or 2d array have to decide what is faster.
     public static List<Point> pointList= new ArrayList<>();
     public static Point [][] pointlist;
+
+    long seed;
 
     //Current tick
 
@@ -55,7 +75,37 @@ public class Lithosphere {
             plate.Update();
         }
     }
+    //set direction and speed
+    void SetPlateStuffs() {
+        for (Plate p : plateList){
+            p.setDirection(random.nextDouble(Math.PI));
+            p.setSpeed(1.4);
+        }
+    }
     //voronoi void
+    void CreateByVoronoi(){
+        int[][] voronoi = VoroniDiagram.GenerateInt(plateSum,sizeX,sizeY,seed);
+        //plate generation
+        for (int id = 0; id < plateSum; id++){
+
+            Plate p = new Plate(id);
+            plateList.add(p);
+        }
+
+        //creating adding points to plates
+        for (int i = 0; i < sizeX; i++){
+            for (int j = 0; j < sizeY; j++){
+                Point p = new Point(i,j,plateList.get(voronoi[i][j]));
+                plateList.get(voronoi[i][j]).pointList.add(p);
+                pointList.add(p);
+                pointlist[i][j] = p;
+            }
+        }
+        //create border
+        for(Plate p : plateList){
+            p.UpdateBorder();
+        }
+    }
     //
     void Create(){
         // create starting points of plateSum plates
@@ -72,11 +122,19 @@ public class Lithosphere {
         List<Plate>spdPlateList = plateList;
         //method that is adding to each plate point parrarely
         Point point;
+        int x =0;
         while (spdPlateList.size()>0){
+            x++;
+            if(x%60 == 0){
+                Main.w.update(Main.w.frame.getGraphics(),"Cycle",Img());
+                System.out.println(x);
+            }
+
             here:
+
             for (Plate p: spdPlateList){
                 point = p.Updatecreate();
-                //if null no bordering free points therefore remove from for cycle
+                //if null plate has no points bordering null therefore remove from for cycle
                 if(point != null){
                     pointList.add(point);
                     pointlist[point.getX()][point.getY()] = point;
