@@ -24,10 +24,31 @@ public class Point{
 
     //mass
     void Move(int[] offset){
-        x = (x + offset[0])% Lithosphere.sizeX; // wrap needed
-        y = y + offset[1] % Lithosphere.sizeY; // wrap needed
+        int newX = (x + offset[0])% Lithosphere.sizeX; // wrap needed
+        int newY = (y + offset[1]) % Lithosphere.sizeY; // wrap needed
         //collision
-        //subdoction
+        //subduction
+        //not empty lets check other stuff
+        Point p = Lithosphere.pointlist[x][y];
+        if (p != null){
+            //if they belong to same plate it moves there
+            if (p.plateParrent == plateParrent){
+                Lithosphere.pointlist[x][y] = this;
+                Lithosphere.pointlist[this.x][this.y] =null;
+                //Collides with other plate
+            } else{
+
+
+
+
+            }
+        }
+        //empty jump right in
+        else{
+            Lithosphere.pointlist[x][y] = this;
+            Lithosphere.pointlist[this.x][this.y] =null;
+        }
+
         //Stress (posun)
 
 

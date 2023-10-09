@@ -8,7 +8,7 @@ class PerlinNoise {
         float[][] noise = new float[sirka][vyska];
         for (int i = 0; i < sirka; i++){
             for (int j = 0; j < vyska; j++){
-                noise[i][j] = (float)rand.nextDouble();
+                noise[i][j] = rand.nextFloat();
             }
         }
         return noise;

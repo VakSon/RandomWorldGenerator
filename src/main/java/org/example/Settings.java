@@ -8,9 +8,13 @@ public class Settings {
     public final static long seed = garbagefunctions.Seed2Long(seedString);
     //perlin
 
-    public static int octaves = 8;
+    public static int octaves = 7;
 
     //plates
     public static int plateSum = 30;
+
+
+    //hydraulic erosion
+    public static int dropsNum = 10000;
 
 }
