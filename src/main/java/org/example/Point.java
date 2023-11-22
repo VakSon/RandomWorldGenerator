@@ -1,8 +1,8 @@
 package org.example;
 
-public class Point{
+public class Point {
 
-    public Point(int x,int y,Plate p){
+    public Point(int x, int y, Plate p){
         this.x = x;
         this.y = y;
         plateParrent = p;
@@ -23,7 +23,7 @@ public class Point{
     //weight
 
     //mass
-    void Move(int[] offset){
+    void move(int[] offset){
         int newX = (x + offset[0])% Lithosphere.sizeX; // wrap needed
         int newY = (y + offset[1]) % Lithosphere.sizeY; // wrap needed
         //collision

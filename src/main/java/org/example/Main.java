@@ -14,16 +14,26 @@ class Main{
         //Mapa mapa = new Mapa();
         //mapa.Build_Heighmap();
 
+
+
+
         w = new Window();
         w.okno();
+//
+//
+        w.update(w.getGraphics(), "Perloun", PerlounNoise.preSettedNoise());
 
-        while(true){
+        HydraulicErosion h = new HydraulicErosion(PerlounNoise.preSettedNoise());
+        Window d = new Window();
+        d.okno();
+        d.update(d.getGraphics(), "hydraulic",h.heightMap);
+        /*while(true){
             w.update(w.getGraphics(), "Perloun", PerlounNoise.preSettedNoise());
             Thread.sleep(2000);
 
             w.update(w.getGraphics(), "Perlin", PerlinNoise.WholeNoise(Settings.seed, sizeX, sizeY, 8));
             Thread.sleep(2000);
-        }
+        }*/
         //Lithosphere l = new Lithosphere();
         //System.out.println("Lithosphere is created.");
         //w.update(w.getGraphics(),"Done",Lithosphere.Img());

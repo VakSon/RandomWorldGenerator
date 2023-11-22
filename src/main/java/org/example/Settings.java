@@ -9,12 +9,13 @@ public class Settings {
     //perlin
 
     public static int octaves = 7;
+    public static float persistance = 0.55f;
 
     //plates
     public static int plateSum = 30;
 
 
     //hydraulic erosion
-    public static int dropsNum = 10000;
+    public static int dropsNum = 50000;
 
 }

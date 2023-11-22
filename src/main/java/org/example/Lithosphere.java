@@ -27,18 +27,18 @@ public class Lithosphere {
 
 
         //generating by voronoi method
-        CreateByVoronoi();
-        SetPlateStuffs();
+        createByVoronoi();
+        setPlateStuffs();
         while(true){
-            Update();
-            Main.w.update(Main.w.frame.getGraphics(),"Cycle",Img());
+            update();
+            Main.w.update(Main.w.frame.getGraphics(),"Cycle", img());
         }
     }
 
 
 
 
-    public static float[][] Img(){
+    public static float[][] img(){
         float[][] result = new float[sizeX][sizeY];
         for (int i = 0; i < sizeX; i++){
             for (int j = 0; j < sizeY; j++){
@@ -57,7 +57,7 @@ public class Lithosphere {
     static List<Plate> plateList= new ArrayList<>();
     //Public  static List<Points> or 2d array have to decide what is faster.
     public static List<Point> pointList= new ArrayList<>();
-    public static Point [][] pointlist;
+    public static Point[][] pointlist;
 
     long seed;
 
@@ -69,21 +69,21 @@ public class Lithosphere {
 
 
     //update void
-    void Update(){
+    void update(){
         tick++;
         for (Plate plate: plateList){
-            plate.Update();
+            plate.update();
         }
     }
     //set direction and speed
-    void SetPlateStuffs() {
+    void setPlateStuffs() {
         for (Plate p : plateList){
             p.setDirection(random.nextDouble(Math.PI));
             p.setSpeed(1.4);
         }
     }
     //voronoi void
-    void CreateByVoronoi(){
+    void createByVoronoi(){
         int[][] voronoi = VoroniDiagram.GenerateInt(plateSum,sizeX,sizeY,seed);
         //plate generation
         for (int id = 0; id < plateSum; id++){
@@ -103,7 +103,7 @@ public class Lithosphere {
         }
         //create border
         for(Plate p : plateList){
-            p.UpdateBorder();
+            p.updateBorder();
         }
     }
     //
@@ -111,7 +111,7 @@ public class Lithosphere {
         // create starting points of plateSum plates
         // [id][0] = x coordinate
         // [id][1] = y coordinate
-        int[][]inicPoints = InicialPoints(plateSum);
+        int[][]inicPoints = inicialPoints(plateSum);
         //create x plates
         for (int id = 0; id < plateSum; id++){
 
@@ -126,7 +126,7 @@ public class Lithosphere {
         while (spdPlateList.size()>0){
             x++;
             if(x%60 == 0){
-                Main.w.update(Main.w.frame.getGraphics(),"Cycle",Img());
+                Main.w.update(Main.w.frame.getGraphics(),"Cycle", img());
                 System.out.println(x);
             }
 
@@ -144,13 +144,15 @@ public class Lithosphere {
                     break here;
                 }
 
+
+
             }
 
         }
     }
 
     // generates InicialPoints x and y values
-    int[][] InicialPoints(int sum){
+    int[][] inicialPoints(int sum){
 
         int[][] result = new int[sum][2];
 

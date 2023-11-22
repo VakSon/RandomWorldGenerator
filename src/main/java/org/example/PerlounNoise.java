@@ -19,6 +19,7 @@ public class PerlounNoise {
         return result;
     }
 
+
     //return 2d float array using 4 border points
     public static float[][] octaveNoise(int octave, float[][] pureNoise){
         //params
@@ -29,9 +30,12 @@ public class PerlounNoise {
         float[][] result = new float[sizeX][sizeY];
 
         for (int i = 0; i < sizeX; i++) {
-            int x0 = i - i%offset;
-            int x1 = (x0 + offset)%sizeX; //wrapped
-            float horizontalBlend = (i%offset)/(float)offset;
+
+
+            int x0 = i - i % offset;
+            int x1 = (x0 + offset) % sizeX; //wrapped
+            float horizontalBlend = (i % offset) / (float) offset;
+
 
             //upgrade of wraparound so that the left and right ends are continuos
             /*if(x1 < x0){
@@ -81,6 +85,7 @@ public class PerlounNoise {
         float[][] pureNoise = pureNoise(sizeX,sizeY,seed);
         float totalAmplitude = 0f;
         float amplitude = 1f;
+        float persistance = Settings.persistance;
 
         //sort octaves needed
         Arrays.sort(octaves);
@@ -92,11 +97,11 @@ public class PerlounNoise {
 
             if(x <= octaves.length-2) {
                 for (int z = 1; z <= octaves[x+1] - octaves[x]; z++) {
-                    amplitude *= 0.55;
+                    amplitude *= persistance;
                     totalAmplitude += amplitude;
                 }
             }else{
-                amplitude *= 0.55;
+                amplitude *= persistance;
                 totalAmplitude += amplitude;
             }
                 for (int i = 0; i < sizeX; i++) {

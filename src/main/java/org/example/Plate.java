@@ -17,10 +17,10 @@ public class Plate {
         for (int i = -1; i < 2; i++){
             for (int j = -1; j < 2; j++){
 
-                Point p = new Point(Wrap(x+i,Lithosphere.sizeX),Wrap(y+j,Lithosphere.sizeY),this);
+                Point p = new Point(wrap(x+i,Lithosphere.sizeX), wrap(y+j,Lithosphere.sizeY),this);
                 pointList.add(p);
                 Lithosphere.pointList.add(p);
-                Lithosphere.pointlist[Wrap(x+i,Lithosphere.sizeX)][Wrap(y+j,Lithosphere.sizeY)] = p;
+                Lithosphere.pointlist[wrap(x+i,Lithosphere.sizeX)][wrap(y+j,Lithosphere.sizeY)] = p;
                 if (i !=0 && j!=0){
                     nullBorder.add(p);
                 }
@@ -29,6 +29,7 @@ public class Plate {
 
 
     }
+    
 
 
     public final int id;
@@ -49,10 +50,10 @@ public class Plate {
     public double direction; // 0 to 2pi radians
     public int[] offset = new int[2];
 
-    public void Update(){
-        this.UpdateOffset();
+    public void update(){
+        this.updateOffset();
         for (Point point: pointList){
-            point.Move(offset);
+            point.move(offset);
         }
     }
 
@@ -60,14 +61,14 @@ public class Plate {
     public void setDirection(double direction){ this.direction = direction;}
 
     //used to create border now
-    public void UpdateBorder(){
+    public void updateBorder(){
         for(Point p : pointList){
             if (p.isBorder()){
                 border.add(p);
             }
         }
     }
-    void UpdateOffset(){
+    void updateOffset(){
         //return array with two values [0]-X and [1]-Y
         offset[1] = (int) (Math.sin(direction)*speed); //y
         offset[0] = (int) (Math.cos(direction)*speed); //x
@@ -83,8 +84,8 @@ public class Plate {
             //here:
             for (int i = -1; i < 2; i++){
                 for (int j = -1; j < 2; j++){
-                    if(Lithosphere.pointlist[Wrap(p.getX()+i,Lithosphere.sizeX)][Wrap(p.getY()+j,Lithosphere.sizeY)] == null){
-                        Point returnable = new Point(Wrap(p.getX()+i,Lithosphere.sizeX),Wrap(p.getY()+j,Lithosphere.sizeY),this);
+                    if(Lithosphere.pointlist[wrap(p.getX()+i,Lithosphere.sizeX)][wrap(p.getY()+j,Lithosphere.sizeY)] == null){
+                        Point returnable = new Point(wrap(p.getX()+i,Lithosphere.sizeX),wrap(p.getY()+j,Lithosphere.sizeY),this);
                         if (returnable.isBorderingNull()){
                             nullBorder.add(returnable);
                         }
@@ -106,8 +107,8 @@ public class Plate {
             for (int i = -1; i < 2; i++){
                 for (int j = -1; j < 2; j++){
                     //could be also done with Lithosphere.pointList.
-                    if(Lithosphere.pointlist[Wrap(p.getX()+i,Lithosphere.sizeX)][Wrap(p.getY()+j,Lithosphere.sizeY)] == null){
-                        Point returnable = new Point(Wrap(p.getX()+i,Lithosphere.sizeX),Wrap(p.getY()+j,Lithosphere.sizeY),this);
+                    if(Lithosphere.pointlist[wrap(p.getX()+i,Lithosphere.sizeX)][wrap(p.getY()+j,Lithosphere.sizeY)] == null){
+                        Point returnable = new Point(wrap(p.getX()+i,Lithosphere.sizeX),wrap(p.getY()+j,Lithosphere.sizeY),this);
                         nullBorder.add(returnable);
                         this.pointList.add(returnable);
                         if (!p.isBorderingNull()){
@@ -122,7 +123,7 @@ public class Plate {
 
         }return null;
     }
-    int Wrap(int number, int max){
+    int wrap(int number, int max){
         int returnable = number%max;
         if (returnable < 0) {
             return returnable += max;
