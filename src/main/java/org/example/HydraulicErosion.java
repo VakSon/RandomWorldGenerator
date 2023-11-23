@@ -12,16 +12,16 @@ public class HydraulicErosion {
     int sizeX;
     int sizeY;
     public float[][] heightMap;
-    int dropsNum = 50;
+    int dropsNum = 500;
     int maxLifeTime = 30;
     float evaporateSpeed = 0.01f;
     double water = 1f;
     double minSlope = 0.01f;
     double minimalWaterVolume = 0.05;
-    int radius = 4;
+    int radius = 3;
     double inertia = 0.1;
     double erosionSpeed = 0.3f;
-    double depositionSpeed = 0.1f;
+    double depositionSpeed = 0.3f;
     double minSedimentCapacity = 0.01f;
     double sedimentCapacityFactor = 2;
 
@@ -48,10 +48,6 @@ public class HydraulicErosion {
 
         for (int lifetime = 0; lifetime<maxLifeTime;lifetime++){
 
-            if (dwater < minimalWaterVolume){
-                lifetime = maxLifeTime;
-                break;
-            }
             //create new direction vector
             double newDirection[] = evaluateDirection(x,y);
 
@@ -61,19 +57,19 @@ public class HydraulicErosion {
             //normalise the vector (to have length of one)
             double lengthOfDirection =Math.sqrt(direction[0]*direction[0] + direction[1]*direction[1]);
 
-            direction[0] = direction[0]/lengthOfDirection;
-            direction[1] = direction[1]/lengthOfDirection;
-
+            if(lengthOfDirection != 0) {
+                direction[0] = direction[0] / lengthOfDirection;
+                direction[1] = direction[1] / lengthOfDirection;
+            }
 
             x += direction[0];
             y += direction[1];
 
-            if (x < 0 || x>sizeX || y< 0 ||y>sizeY || dwater < minimalWaterVolume){
-                lifetime = maxLifeTime;
+            if ((direction[0] ==0 && direction[1] == 0) ||x < 0 || x>sizeX || y< 0 ||y>sizeY || dwater < minimalWaterVolume){
                 break;
             }
 
-            //count the erosion or sedimantation amount
+            //count the erosion or sedimentation amount
 
             double newHeight = evaluateHeight(x,y);
             double diffHeight = newHeight-height;
@@ -85,7 +81,7 @@ public class HydraulicErosion {
             if (dsediment > sedimentCapacity || diffHeight > 0){
 
 
-                double amountToDeposit = (diffHeight > 0) ? Math.min(diffHeight, dsediment) : (dsediment - sedimentCapacity)*depositionSpeed;
+                double amountToDeposit = (diffHeight > 0) ? Math.min(diffHeight, dsediment) : (dsediment - sedimentCapacity) * depositionSpeed;
                 dsediment -= amountToDeposit;
 
                 //add sediment to four nodes using bilinear interpolation (again :((( )
@@ -132,7 +128,7 @@ public class HydraulicErosion {
                 for (int i = 0; i < index;i++){
                     int posX = indexes.get(i)%sizeX;
                     int posY = indexes.get(i)/sizeX;
-                    double lul = weights.get(i);
+                    double lul = weights.get(i)*amountToErode;
                     if(isNaN(heightMap[posX][posY]-lul)){
                         System.out.println(posX +  "   " + posY + "   " + lul);
                     }
