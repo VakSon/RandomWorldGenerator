@@ -12,21 +12,17 @@ public class HydraulicErosion {
     int sizeX;
     int sizeY;
     public float[][] heightMap;
-
     int dropsNum = 50;
     int maxLifeTime = 30;
-    float evaporateSpeed = 0.1f;
+    float evaporateSpeed = 0.01f;
     double water = 1f;
-
     double minSlope = 0.01f;
-
     double minimalWaterVolume = 0.05;
-
     int radius = 4;
     double inertia = 0.1;
-    double erosionSpeed = 0.2f;
-
-    double minSedimentCapacity = 0.001f;
+    double erosionSpeed = 0.3f;
+    double depositionSpeed = 0.1f;
+    double minSedimentCapacity = 0.01f;
     double sedimentCapacityFactor = 2;
 
     public HydraulicErosion(float[][] heightMap){
@@ -43,7 +39,7 @@ public class HydraulicErosion {
     }
     public void droplet(double x ,double y){
         //represents how many tiles it will go for one lifetime cyclus
-        double speed = 5f;
+        double speed = 1f;
         double height = evaluateHeight(x,y);
         double[] direction = new double[2];
         double dwater = water;
@@ -88,7 +84,8 @@ public class HydraulicErosion {
             //if moving uphill or carrying more than it should
             if (dsediment > sedimentCapacity || diffHeight > 0){
 
-                double amountToDeposit = (diffHeight > 0) ? Math.min(diffHeight,dsediment) : (dsediment - sedimentCapacity)*sedimentCapacity;
+
+                double amountToDeposit = (diffHeight > 0) ? Math.min(diffHeight, dsediment) : (dsediment - sedimentCapacity)*depositionSpeed;
                 dsediment -= amountToDeposit;
 
                 //add sediment to four nodes using bilinear interpolation (again :((( )
@@ -99,7 +96,7 @@ public class HydraulicErosion {
             }
             else {
                 //erode part of ground around droplet
-                //calculate amount to erode
+                //calculate amount to erode cannot be higher than diff in height => create pit holes
                 double amountToErode = Math.min((sedimentCapacity - dsediment) * erosionSpeed,-diffHeight);
                 dsediment += amountToErode;
                 //for all nodes in radius from NW node
@@ -144,7 +141,7 @@ public class HydraulicErosion {
             }
 
             //update speed and amount of water, 10 is gravitational force
-            speed = Math.sqrt(speed*speed + diffHeight * 10);
+            speed = Math.sqrt(speed*speed + diffHeight * 4);
             dwater *= (1-evaporateSpeed);
         }
 
