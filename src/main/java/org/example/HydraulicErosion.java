@@ -94,7 +94,7 @@ public class HydraulicErosion {
                 //erode part of ground around droplet
                 //calculate amount to erode cannot be higher than diff in height => create pit holes
                 double amountToErode = Math.min((sedimentCapacity - dsediment) * erosionSpeed,-diffHeight);
-                dsediment += amountToErode;
+
                 //for all nodes in radius from NW node
                 List<Double> weights = new ArrayList<>();
 
@@ -128,11 +128,13 @@ public class HydraulicErosion {
                 for (int i = 0; i < index;i++){
                     int posX = indexes.get(i)%sizeX;
                     int posY = indexes.get(i)/sizeX;
-                    double lul = weights.get(i)*amountToErode;
-                    if(isNaN(heightMap[posX][posY]-lul)){
-                        System.out.println(posX +  "   " + posY + "   " + lul);
+                    double amountToErodeWeighted = weights.get(i)*amountToErode;
+                    double deltaSediment = (heightMap[posX][posY] < amountToErodeWeighted) ? heightMap[posX][posY] : amountToErodeWeighted;
+                    if(isNaN(heightMap[posX][posY]-amountToErodeWeighted)){
+                        System.out.println(posX +  "   " + posY + "   " + amountToErodeWeighted);
                     }
-                    heightMap[posX][posY] -= lul;
+                    heightMap[posX][posY] -= deltaSediment;
+                    dsediment += deltaSediment;
                 }
             }
 
