@@ -12,7 +12,7 @@ public class HydraulicErosion {
     int sizeX;
     int sizeY;
     public float[][] heightMap;
-    int dropsNum = 500;
+    int dropsNum = 50000;
     int maxLifeTime = 30;
     float evaporateSpeed = 0.01f;
     double water = 1f;
@@ -23,6 +23,7 @@ public class HydraulicErosion {
     double erosionSpeed = 0.3f;
     double depositionSpeed = 0.3f;
     double minSedimentCapacity = 0.01f;
+    double minSpeed = 0.25;
     double sedimentCapacityFactor = 2;
 
     public HydraulicErosion(float[][] heightMap){
@@ -35,6 +36,7 @@ public class HydraulicErosion {
         Random r = new Random(Settings.seed);
         for(int drops = 0; drops < dropsNum;drops++){
             droplet(r.nextDouble(sizeX),r.nextDouble(sizeY));
+            System.out.println();
         }
     }
     public void droplet(double x ,double y){
@@ -88,7 +90,7 @@ public class HydraulicErosion {
                 heightMap[(int) wrap( x,sizeX)][(int) wrap(y, sizeY)] += amountToDeposit * (1 - (x%1)) * (1 - (y %1));
                 heightMap[(int) wrap(x + 1,sizeX)][(int) wrap(y,sizeY)] += amountToDeposit * (x%1) * (1 - (y %1));
                 heightMap[(int) wrap (x,sizeX)][(int) wrap(y + 1,sizeY)] += amountToDeposit * (1 - (x%1)) * ( y %1 );
-                heightMap[(int) wrap (x+1,sizeX)][(int) wrap(y+1,sizeY)] += amountToDeposit * (x%1) * y %1;
+                heightMap[(int) wrap (x+1,sizeX)][(int) wrap(y+1,sizeY)] += amountToDeposit * (x%1) * (y %1);
             }
             else {
                 //erode part of ground around droplet
@@ -131,7 +133,7 @@ public class HydraulicErosion {
                     double amountToErodeWeighted = weights.get(i)*amountToErode;
                     double deltaSediment = (heightMap[posX][posY] < amountToErodeWeighted) ? heightMap[posX][posY] : amountToErodeWeighted;
                     if(isNaN(heightMap[posX][posY]-amountToErodeWeighted)){
-                        System.out.println(posX +  "   " + posY + "   " + amountToErodeWeighted);
+                        //System.out.println(posX +  "   " + posY + "   " + amountToErodeWeighted);
                     }
                     heightMap[posX][posY] -= deltaSediment;
                     dsediment += deltaSediment;
@@ -139,7 +141,9 @@ public class HydraulicErosion {
             }
 
             //update speed and amount of water, 10 is gravitational force
-            speed = Math.sqrt(speed*speed + diffHeight * 4);
+            speed = (speed < minSpeed ) ? minSpeed : Math.sqrt(speed*speed - diffHeight * 0.4);
+
+            System.out.println(speed);
             dwater *= (1-evaporateSpeed);
         }
 
