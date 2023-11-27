@@ -19,7 +19,7 @@ public class Window extends JComponent{
     public void paint(Graphics g) {
         if (this.x != null){
             BufferedImage image = new BufferedImage(sirka,vyska,BufferedImage.TYPE_INT_RGB);
-            Color start = new Color(255, 212, 121);
+            Color start = new Color(255, 255, 255);
             Color end = new Color(0, 55, 10);
             for (int i=0;i<sirka;i++){
 

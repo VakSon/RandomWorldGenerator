@@ -1,9 +1,6 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static java.lang.Double.isNaN;
 
@@ -12,7 +9,7 @@ public class HydraulicErosion {
     int sizeX;
     int sizeY;
     public float[][] heightMap;
-    int dropsNum = 50000;
+    int dropsNum = 100000;
     int maxLifeTime = 30;
     float evaporateSpeed = 0.01f;
     double water = 1f;
@@ -23,7 +20,7 @@ public class HydraulicErosion {
     double erosionSpeed = 0.3f;
     double depositionSpeed = 0.3f;
     double minSedimentCapacity = 0.01f;
-    double minSpeed = 0.25;
+    double minSpeed = 0.15;
     double sedimentCapacityFactor = 2;
 
     public HydraulicErosion(float[][] heightMap){
@@ -33,11 +30,24 @@ public class HydraulicErosion {
         erode();
     }
     public void erode(){
+        double totalMeshBefore = 0;
+        for (int i = 0; i < sizeX; i++){
+            for (int j = 0; j < sizeY; j++){
+                totalMeshBefore += heightMap[i][j];
+            }
+        }
         Random r = new Random(Settings.seed);
         for(int drops = 0; drops < dropsNum;drops++){
             droplet(r.nextDouble(sizeX),r.nextDouble(sizeY));
-            System.out.println();
+            //System.out.println();
         }
+        double totalMeshAfter = 0;
+        for (int i = 0; i < sizeX; i++){
+            for (int j = 0; j < sizeY; j++){
+                totalMeshAfter += heightMap[i][j];
+            }
+        }
+        System.out.println(totalMeshBefore + "     " + totalMeshAfter);
     }
     public void droplet(double x ,double y){
         //represents how many tiles it will go for one lifetime cyclus
@@ -51,7 +61,7 @@ public class HydraulicErosion {
         for (int lifetime = 0; lifetime<maxLifeTime;lifetime++){
 
             //create new direction vector
-            double newDirection[] = evaluateDirection(x,y);
+            double[] newDirection = evaluateDirection(x,y);
 
             direction[0] = direction[0]*inertia - newDirection[0]*( 1 - inertia);
             direction[1] = direction[1]*inertia - newDirection[1]*( 1 - inertia);
@@ -132,21 +142,21 @@ public class HydraulicErosion {
                     int posY = indexes.get(i)/sizeX;
                     double amountToErodeWeighted = weights.get(i)*amountToErode;
                     double deltaSediment = (heightMap[posX][posY] < amountToErodeWeighted) ? heightMap[posX][posY] : amountToErodeWeighted;
-                    if(isNaN(heightMap[posX][posY]-amountToErodeWeighted)){
-                        //System.out.println(posX +  "   " + posY + "   " + amountToErodeWeighted);
-                    }
                     heightMap[posX][posY] -= deltaSediment;
                     dsediment += deltaSediment;
                 }
             }
 
-            //update speed and amount of water, 10 is gravitational force
-            speed = (speed < minSpeed ) ? minSpeed : Math.sqrt(speed*speed - diffHeight * 0.4);
+            //update speed and amount of water
+            speed = Math.sqrt(speed*speed - diffHeight * 0.01);
+            if (isNaN(speed)) {
+                speed = minSpeed;
+            }
 
-            System.out.println(speed);
-            dwater *= (1-evaporateSpeed);
         }
 
+            //System.out.println(speed);
+            dwater *= (1-evaporateSpeed);
 
     }
     double[] evaluateDirection(double x,double y){
