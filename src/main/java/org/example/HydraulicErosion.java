@@ -147,11 +147,11 @@ public class HydraulicErosion {
             }
 
             //update speed and amount of water
-            speed = (float) Math.sqrt(speed*speed - diffHeight * 4);
+            speed = (float) Math.sqrt(speed*speed + diffHeight * 4);
             if (isNaN(speed)) {
                 speed = minSpeed;
             }
-            dwater = (1-evaporateSpeed);
+            dwater *= (1-evaporateSpeed);
         }
     }
     float[] evaluateDirection(float x,float y){
@@ -168,7 +168,7 @@ public class HydraulicErosion {
         float dr = variables[5];
 
         float gradientX = (tr - tl) * (1 - offsetY) + (dr - dl) * offsetY;
-        float gradientY = (dl - tl) * (1 - offsetX) + (dr - tl) * offsetX;
+        float gradientY = (dl - tl) * (1 - offsetX) + (dr - tr) * offsetX;
 
 
         //System.out.println("\nHeightNW " + tl +" HeightNE " + tr + "\nX " + x + " Y " + y + "\nHeightSW " + dl +" HeightSE " + dr + "\nGradient X " + gradientX + " GradientY " + gradientY + "\n");
@@ -204,7 +204,7 @@ public class HydraulicErosion {
         dl = heightMap[(int)wrap(x,sizeX)][(int)wrap(y+1,sizeY)];
         dr = heightMap[(int)wrap(x+1,sizeX)][(int)wrap(y+1,sizeY)];
 
-        return new float[]{offsetY, offsetY,tl,tr,dl,dr};
+        return new float[]{offsetX, offsetY,tl,tr,dl,dr};
     }
     float wrap(float i, int max){
         return i%max;

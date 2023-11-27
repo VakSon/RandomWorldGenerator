@@ -23,9 +23,7 @@ class Main{
 //
 //
         w.update(w.getGraphics(), "Perloun", PerlounNoise.preSettedNoise());
-
-        w.update(w.getGraphics(),"DiamondSquare", new DiamondSquare(sizeX,sizeY,new Random(Settings.seed)).getHeighMap());
-        /*HydraulicErosion h = new HydraulicErosion(PerlounNoise.preSettedNoise());
+        HydraulicErosion h = new HydraulicErosion(PerlounNoise.preSettedNoise());
         int x = 1;
         while (true){
             x++;
@@ -33,7 +31,7 @@ class Main{
             h.dropsNum = 1000;
             h.run();
             Thread.sleep(500);
-        }*/
+        }
 
         /*while(true){
             w.update(w.getGraphics(), "Perloun", PerlounNoise.preSettedNoise());
