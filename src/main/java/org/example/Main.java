@@ -1,6 +1,7 @@
 package org.example;
 
 import java.io.IOException;
+import java.util.Random;
 
 
 class Main{
@@ -23,10 +24,17 @@ class Main{
 //
         w.update(w.getGraphics(), "Perloun", PerlounNoise.preSettedNoise());
 
-        HydraulicErosion h = new HydraulicErosion(PerlounNoise.preSettedNoise());
-        Window d = new Window();
-        d.okno();
-        d.update(d.getGraphics(), "hydraulic",h.heightMap);
+        w.update(w.getGraphics(),"DiamondSquare", new DiamondSquare(sizeX,sizeY,new Random(Settings.seed)).getHeighMap());
+        /*HydraulicErosion h = new HydraulicErosion(PerlounNoise.preSettedNoise());
+        int x = 1;
+        while (true){
+            x++;
+            w.update(w.getGraphics(), "hydraulic" + x,h.heightMap);
+            h.dropsNum = 1000;
+            h.run();
+            Thread.sleep(500);
+        }*/
+
         /*while(true){
             w.update(w.getGraphics(), "Perloun", PerlounNoise.preSettedNoise());
             Thread.sleep(2000);
