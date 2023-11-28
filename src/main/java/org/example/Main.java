@@ -24,10 +24,12 @@ class Main{
 //
         w.update(w.getGraphics(), "Perloun", PerlounNoise.preSettedNoise());
         HydraulicErosion h = new HydraulicErosion(PerlounNoise.preSettedNoise());
+        Window d = new Window();
+        d.okno();
         int x = 1;
-        while (true){
+        while (x < 60){
             x++;
-            w.update(w.getGraphics(), "hydraulic" + x,h.heightMap);
+            d.update(d.getGraphics(), "hydraulic" + x,h.heightMap);
             h.dropsNum = 1000;
             h.run();
             Thread.sleep(500);

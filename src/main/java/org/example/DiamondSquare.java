@@ -44,7 +44,6 @@ public class DiamondSquare {
 
         }
 
-
         //find min and max to normalize
         float min = 1;
         float max = 0;

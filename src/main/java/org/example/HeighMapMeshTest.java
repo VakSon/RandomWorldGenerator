@@ -18,7 +18,6 @@ import java.util.List;
 
 public class HeighMapMeshTest extends Application {
 
-    private static final int PIXEL_SIZE = 5;
 
     private static final List<Color> COLOR_LIST = Arrays.asList(Color.web("#3b6eca"),
             Color.web("#d7d588"), Color.web("#60a318"), Color.web("#457517"), Color.web("#467610"),
