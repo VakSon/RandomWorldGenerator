@@ -13,14 +13,14 @@ public class HydraulicErosion {
     int maxLifeTime = 30;
     float evaporateSpeed = 0.01f;
     float water = 1f;
-    float minimalWaterVolume = 0.05f;
-    int radius = 2;
+    float minimalWaterVolume = 0.5f;
+    int radius = 3;
     float inertia = 0.1f;
     float erosionSpeed = 0.3f;
     float depositionSpeed = 0.3f;
     float minSedimentCapacity = 0.01f;
     float minSpeed = 0.05f;
-    float sedimentCapacityFactor = 2;
+    float sedimentCapacityFactor = 4;
 
     public HydraulicErosion(float[][] heightMap){
         sizeX = heightMap.length;
