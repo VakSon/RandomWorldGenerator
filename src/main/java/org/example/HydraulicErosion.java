@@ -9,18 +9,16 @@ public class HydraulicErosion {
     int sizeX;
     int sizeY;
     public float[][] heightMap;
-    int dropsNum = 1000;
-    int maxLifeTime = 30;
-    float evaporateSpeed = 0.01f;
-    float water = 1f;
-    float minimalWaterVolume = 0.5f;
-    int radius = 3;
-    float inertia = 0.1f;
-    float erosionSpeed = 0.3f;
-    float depositionSpeed = 0.3f;
-    float minSedimentCapacity = 0.01f;
-    float minSpeed = 0.05f;
-    float sedimentCapacityFactor = 4;
+    int dropsNum = Settings.dropsNum;
+    int maxLifeTime = Settings.maxLifeTime;
+    float evaporateSpeed = Settings.evaporateSpeed;
+    float water = Settings.water;
+    int radius = Settings.radius;
+    float inertia = Settings.inertia;
+    float erosionSpeed = Settings.erosionSpeed;
+    float depositionSpeed = Settings.depositionSpeed;
+    float minSedimentCapacity = Settings.minSedimentCapacity;
+    float sedimentCapacityFactor = Settings.sedimentCapacityFactor;
 
     public HydraulicErosion(float[][] heightMap){
         sizeX = heightMap.length;
@@ -29,24 +27,11 @@ public class HydraulicErosion {
         run();
     }
     public void run(){
-        float totalMeshBefore = 0;
-        for (int i = 0; i < sizeX; i++){
-            for (int j = 0; j < sizeY; j++){
-                totalMeshBefore += heightMap[i][j];
-            }
-        }
         Random r = new Random(Settings.seed);
         for(int drops = 0; drops < dropsNum;drops++){
             droplet(r.nextFloat(sizeX),r.nextFloat(sizeY));
             //System.out.println();
         }
-        float totalMeshAfter = 0;
-        for (int i = 0; i < sizeX; i++){
-            for (int j = 0; j < sizeY; j++){
-                totalMeshAfter += heightMap[i][j];
-            }
-        }
-        System.out.println(totalMeshBefore + "     " + totalMeshAfter);
     }
     public void droplet(float x ,float y){
         //represents how many tiles it will go for one lifetime cyclus
@@ -76,7 +61,7 @@ public class HydraulicErosion {
             x += direction[0];
             y += direction[1];
 
-            if ((direction[0] ==0 && direction[1] == 0) ||x < 0 || x>sizeX || y< 0 ||y>sizeY || dwater < minimalWaterVolume){
+            if ((direction[0] ==0 && direction[1] == 0) ||x < 0 || x>sizeX || y< 0 ||y>sizeY){
                 break;
             }
 
@@ -106,6 +91,7 @@ public class HydraulicErosion {
                 //calculate amount to erode cannot be higher than diff in height => create pit holes
                 float amountToErode = Math.min((sedimentCapacity - dsediment) * erosionSpeed,-diffHeight);
 
+
                 //for all nodes in radius from NW node
                 List<Float> weights = new ArrayList<>();
 
@@ -119,7 +105,7 @@ public class HydraulicErosion {
                         //distance to x,y
                         float distance = (float) Math.sqrt(i*i + j*j);
                         //if its in range
-                        if (Math.sqrt(i*i + j*j) <= radius){
+                        if (distance <= radius){
                             //weight
                             float weight = 1 - distance/radius;
                             if(x+i > 0 && x+i < sizeX && y+j > 0 && y+j < sizeY) {
@@ -147,10 +133,12 @@ public class HydraulicErosion {
             }
 
             //update speed and amount of water
-            speed = (float) Math.sqrt(speed*speed + diffHeight * 4);
+            /*speed = (float) Math.sqrt(speed*speed + diffHeight * 10);
             if (isNaN(speed)) {
                 speed = minSpeed;
-            }
+            }*/
+            float dx = (float) Math.sqrt(Math.abs(diffHeight * 10));
+            speed += (diffHeight<0)? -dx:dx;
             dwater *= (1-evaporateSpeed);
         }
     }

@@ -10,7 +10,7 @@ public class DiamondSquare {
     int sizeX;
     int sizeY;
 
-    float randomness = 2f;
+    float randomness = Settings.randomness;
 
     float[][] heighMap;
     Random random;
@@ -89,27 +89,27 @@ public class DiamondSquare {
 
     void diamondSquare(int x1, int y1, int x2, int y2) {
         //diamond step
-        float tl = heighMap[x1][y1];
-        float tr = heighMap[x2][y1];
-        float bl = heighMap[x1][y2];
-        float br = heighMap[x2][y2];
+        float NW = heighMap[x1][y1];
+        float NE = heighMap[x2][y1];
+        float SW = heighMap[x1][y2];
+        float SE = heighMap[x2][y2];
 
-        float value = (tl + tr + bl + br + noise()) / 4;
+        float value = (NW + NE + SW + SE + noise()) / 4;
         int middleX = x1 + ((x2 - x1) / 2);
         int middleY = y1 + ((y2 - y1) / 2);
         tryToSet(middleX, middleY, value);
 
         //square step
-        float l = (tl + bl + value + noise()) / 3;
+        float l = (NW + SW + value + noise()) / 3;
         tryToSet(x1, middleY, l);
 
-        float r = (tr + br + value + noise()) / 3; //right
+        float r = (NE + SE + value + noise()) / 3; //right
         tryToSet(x2, middleY, r);
 
-        float t = (tl + value + tr + noise()) / 3;
+        float t = (NW + value + NE + noise()) / 3;
         tryToSet(middleX, y1, t);
 
-        float b = (bl + value + br + noise()) / 3;
+        float b = (SW + value + SE + noise()) / 3;
         tryToSet(middleX, y2, b);
 
     }
@@ -132,6 +132,7 @@ public class DiamondSquare {
     }
 
     private float noise() {
+
         return random.nextFloat() * randomness - (randomness /2);
     }
 
